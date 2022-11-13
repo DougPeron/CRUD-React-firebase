@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { addDoc, collection, deleteDoc, getDocs, getFirestore, doc} from "firebase/firestore";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Table from 'react-bootstrap/Table';
 import "./assets/style/styles.css"
 
 import { useEffect, useState } from "react";
@@ -39,28 +42,51 @@ function App() {
   },[handleCreateUser])
 
   return (
-    <div className="main">
-      <div className="form">
-      <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)}/>
-      <br/>
-      <input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)}/>
-      <br/>
-      <input type="number" placeholder="Idade" value={idade} onChange={(e) => setIdade(e.target.value)}/>
-      <br/>
-      <button onClick={handleCreateUser}>Cadastrar</button>
-    </div>
-      <ul>
+    <div className="m-4">
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail" >
+            <Form.Label>Nome</Form.Label>
+            <Form.Control type="email" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)}/>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicEmail" >
+            <Form.Label>E-mail</Form.Label>
+            <Form.Control type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword" >
+            <Form.Label>Idade</Form.Label>
+            <Form.Control type="number" placeholder="Idade" value={idade} onChange={(e) => setIdade(e.target.value)}/>
+        </Form.Group>
+
+        <Button variant="primary" onClick={handleCreateUser}>
+            Cadastrar
+        </Button>
+      </Form>
+
+      <Table className="mt-4" striped bordered hover>
+        <thead>
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Idade</th>
+          
+        </tr>
+        </thead>
+        <tbody>
         {usuarios.map((user) =>{
-        return(
-          <div key={user.id}>
-            <li>{user.name}</li>
-            <li>{user.email}</li>
-            <li>{user.idade}</li>
-            <button onClick={()=> deleteUser(user.id)}>Deletar</button>
-          </div>
-        )
-      })}
-    </ul>
+          return(
+            <tr key={user.id}>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>{user.idade}</td>
+            <td><button onClick={()=> deleteUser(user.id)}>Deletar</button></td>
+          </tr>
+          )
+        })}
+        </tbody>
+      </Table>
+      
     </div>
     
     
